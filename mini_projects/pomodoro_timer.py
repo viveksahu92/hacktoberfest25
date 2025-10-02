@@ -1,12 +1,40 @@
+"""
+Pomodoro Timer Application
+
+A simple GUI-based Pomodoro Timer built with tkinter that helps users manage
+their work sessions using the Pomodoro Technique (25 minutes work, 5 minutes break).
+"""
+
 import tkinter as tk
 from tkinter import messagebox
 
+# Color constants for different timer states
 WORK_BG = "#e74c3c"    # Pomodoro Red
 BREAK_BG = "#2ecc71"   # Green for breaks
 IDLE_BG = "#f1c40f"    # Yellow for idle/reset
 
 class PomodoroTimer:
+    """
+    A GUI-based Pomodoro Timer application using the tkinter library.
+    
+    This class implements the Pomodoro Technique with 25-minute work sessions
+    followed by 5-minute breaks. The interface changes color to indicate
+    different states (work, break, idle).
+    
+    Attributes:
+        root (tk.Tk): The main tkinter window
+        working (bool): Flag indicating if timer is currently running
+        cycle (int): Counter for completed pomodoro cycles
+        state (str): Current timer state ('work' or 'break')
+        remaining (int): Remaining time in seconds for current session
+    """
     def __init__(self, root):
+        """
+        Initialize the Pomodoro Timer application.
+        
+        Args:
+            root (tk.Tk): The main tkinter window object
+        """
         self.root = root
         self.root.title("Pomodoro Timer")
         self.root.geometry("340x230")
@@ -44,11 +72,23 @@ class PomodoroTimer:
         self.remaining = 25 * 60
 
     def set_bg(self, color):
+        """
+        Change the background color of the main window and labels.
+        
+        Args:
+            color (str): Hex color code to set as background
+        """
         self.root.configure(bg=color)
         self.label.configure(bg=color)
         self.timer_label.configure(bg=color)
 
     def start_pomodoro(self):
+        """
+        Start a new Pomodoro work session.
+        
+        Initializes a 25-minute work timer if not already running.
+        Changes the background to work color and begins countdown.
+        """
         if not self.working:
             self.working = True
             self.state = "work"
@@ -58,6 +98,13 @@ class PomodoroTimer:
             self.countdown()
 
     def countdown(self):
+        """
+        Handle the countdown timer logic.
+        
+        Decrements the remaining time by 1 second and updates the display.
+        Schedules itself to run again after 1000ms (1 second) using tkinter's
+        after() method. When timer reaches zero, calls timer_done().
+        """
         if self.working and self.remaining > 0:
             mins, secs = divmod(self.remaining, 60)
             self.time_var.set(f"{mins:02d}:{secs:02d}")
@@ -67,6 +114,13 @@ class PomodoroTimer:
             self.timer_done()
 
     def timer_done(self):
+        """
+        Handle timer completion for both work and break sessions.
+        
+        When a work session finishes, starts a 5-minute break.
+        When a break finishes, resets to idle state and increments cycle count.
+        Shows appropriate message boxes to notify the user.
+        """
         if self.state == "work":
             messagebox.showinfo("Pomodoro Timer", "Work session finished! Time for a break.")
             self.state = "break"
@@ -82,6 +136,13 @@ class PomodoroTimer:
             self.time_var.set("25:00")
 
     def reset_timer(self):
+        """
+        Reset the timer to initial state.
+        
+        Stops any running timer, resets to work state with 25 minutes,
+        and changes background to idle color. Useful for interruptions
+        or when user wants to start fresh.
+        """
         self.working = False
         self.state = "work"
         self.remaining = 25 * 60
@@ -89,10 +150,22 @@ class PomodoroTimer:
         self.set_bg(IDLE_BG)
 
     def update_timer(self):
+        """
+        Update the timer display with current remaining time.
+        
+        Converts remaining seconds to MM:SS format and updates
+        the timer label display.
+        """
         mins, secs = divmod(self.remaining, 60)
         self.time_var.set(f"{mins:02d}:{secs:02d}")
 
 if __name__ == "__main__":
+    """
+    Main entry point for the Pomodoro Timer application.
+    
+    Creates the main tkinter window and initializes the PomodoroTimer class.
+    Starts the GUI event loop to handle user interactions.
+    """
     root = tk.Tk()
     PomodoroTimer(root)
     root.mainloop()
