@@ -1,7 +1,7 @@
 """
-Pomodoro Timer Application
+Pomodoro-Timer Application
 
-A simple GUI-based Pomodoro Timer built with tkinter that helps users manage
+A simple GUI-based Pomodoro-Timer built with tkinter that helps users manage
 their work sessions using the Pomodoro Technique (25 minutes work, 5 minutes break).
 """
 
@@ -15,7 +15,7 @@ IDLE_BG = "#f1c40f"    # Yellow for idle/reset
 
 class PomodoroTimer:
     """
-    A GUI-based Pomodoro Timer application using the tkinter library.
+    A GUI-based Pomodoro-Timer application using the tkinter library.
     
     This class implements the Pomodoro Technique with 25-minute work sessions
     followed by 5-minute breaks. The interface changes color to indicate
@@ -30,13 +30,13 @@ class PomodoroTimer:
     """
     def __init__(self, root):
         """
-        Initialize the Pomodoro Timer application.
+        Initialize the Pomodoro-Timer application.
         
         Args:
             root (tk.Tk): The main tkinter window object
         """
         self.root = root
-        self.root.title("Pomodoro Timer")
+        self.root.title("Pomodoro-Timer")
         self.root.geometry("340x230")
         self.root.configure(bg=IDLE_BG)
 
@@ -44,7 +44,7 @@ class PomodoroTimer:
         self.cycle = 1
 
         self.label = tk.Label(
-            root, text="Pomodoro Timer",
+            root, text="Pomodoro-Timer",
             font=("Arial", 20, "bold"), bg=IDLE_BG, fg="#2d3436"
         )
         self.label.pack(pady=(16, 8))
@@ -122,14 +122,14 @@ class PomodoroTimer:
         Shows appropriate message boxes to notify the user.
         """
         if self.state == "work":
-            messagebox.showinfo("Pomodoro Timer", "Work session finished! Time for a break.")
+            messagebox.showinfo("Pomodoro-Timer", "Work session finished! Time for a break.")
             self.state = "break"
             self.set_bg(BREAK_BG)
             self.remaining = 5 * 60
             self.update_timer()
             self.countdown()
         else:
-            messagebox.showinfo("Pomodoro Timer", "Break finished! Back to work.")
+            messagebox.showinfo("Pomodoro-Timer", "Break finished! Back to work.")
             self.working = False
             self.cycle += 1
             self.set_bg(IDLE_BG)
@@ -161,7 +161,7 @@ class PomodoroTimer:
 
 if __name__ == "__main__":
     """
-    Main entry point for the Pomodoro Timer application.
+    Main entry point for the Pomodoro-Timer application.
     
     Creates the main tkinter window and initializes the PomodoroTimer class.
     Starts the GUI event loop to handle user interactions.
